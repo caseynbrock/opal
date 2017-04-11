@@ -1,0 +1,43 @@
+# DAKOTA INPUT FILE for position sweep
+# This file is processed when moga starts.
+# It is used as a template for dakota_r.in.
+# Preprocessing is handles by prepro_configs.py, which adds the number of coordinates (3*num_atoms), the descriptors (1 per coordinate...naems are unimportant), and the atomic lattice coordinates for each configuration (one row per configuration
+#
+# The file created by prepro_configs.py is dakota_r.template, which is the file actually used by moga
+#
+# $Id: dakota_r.in.template,v 1.6 2014/11/03 17:37:29 brockc Exp $
+#
+
+strategy,
+	single_method
+        #tabular_graphics_data
+
+method,
+	list_parameter_study
+        list_of_points = 
+
+model,
+	single
+
+variables,
+	continuous_design =
+	  descriptors 
+
+interface,
+        asynchronous
+	  evaluation_concurrency = 4
+        system			
+	  analysis_driver = '$(pwd)/../../../scripts/wrapper_r.sh'
+          parameters_file = 'params'
+          results_file    = 'results'
+        work_directory directory_tag
+          named 'workdir' file_save directory_save
+          template_directory = 'templatedir'
+            copy
+            replace
+ 
+responses,
+	num_objective_functions =  
+	no_gradients				
+	no_hessians
+
